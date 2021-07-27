@@ -385,6 +385,9 @@ defmodule Tds.Protocol do
   end
 
   defp connect(opts, s) do
+    opts = opts
+      |> Keyword.put_new(:ssl, true)
+      |> Keyword.put_new(:ssl_opts, [])
     host = Keyword.fetch!(opts, :hostname)
     host = if is_binary(host), do: String.to_charlist(host), else: host
     port = s.itcp || opts[:port] || System.get_env("MSSQLPORT") || 1433
