@@ -55,6 +55,9 @@ defmodule Tds do
   @spec start_link([start_option]) ::
           {:ok, conn} | {:error, Tds.Error.t() | term}
   def start_link(opts \\ []) do
+    opts = opts
+      |> Keyword.put_new(:idle_timeout, @timeout)
+      |> Keyword.put_new(:execution_mode, @execution_mode)
     DBConnection.start_link(Tds.Protocol, default(opts))
   end
 
